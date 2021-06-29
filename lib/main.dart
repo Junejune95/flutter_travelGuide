@@ -4,9 +4,6 @@ import 'package:travelGuidebyFlutter/pages/favourite/favourite_page.dart';
 import 'package:travelGuidebyFlutter/pages/home/home_page.dart';
 import 'package:travelGuidebyFlutter/pages/location/location_page.dart';
 import 'package:travelGuidebyFlutter/pages/profile/profile_page.dart';
-import './constants/app-extension.dart';
-
-import 'enum/app_enum.dart';
 
 void main() {
   runApp(MyApp());
