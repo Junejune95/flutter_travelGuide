@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:travelGuidebyFlutter/pages/home/header_with_search.dart';
-import 'package:travelGuidebyFlutter/pages/home/hotel_gridview_list.dart';
-import 'package:travelGuidebyFlutter/pages/home/selecteable_list.dart';
+import 'package:travelGuidebyFlutter/constants/animated_list.dart';
+import 'package:travelGuidebyFlutter/pages/home/components/header_with_search.dart';
+import 'package:travelGuidebyFlutter/pages/home/hotel/hotel_gridview_list.dart';
+import 'package:travelGuidebyFlutter/pages/home/components/iconTab.dart';
+import 'package:travelGuidebyFlutter/pages/home/restaurant/restaurant_view.dart';
+import 'package:travelGuidebyFlutter/pages/home/transportation/transportation_view.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  List<IconData> _icons = [
+    Icons.hotel,
+    Icons.flight,
+    Icons.restaurant,
+  ];
+  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,20 +26,43 @@ class HomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AnimatedList(
-              index: 1,
+            BuildAnimatedList(
+              index: 2,
               widget: HearderWithSearch(),
             ),
-            AnimatedList(
-              index: 2,
-              widget: SelecteableList(),
+            BuildAnimatedList(
+              index: 4,
+              widget: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: _icons
+                    .asMap()
+                    .entries
+                    .map(
+                      (e) => IconTab(
+                        icon: _icons[e.key],
+                        text: null,
+                        onTap: () {
+                          setState(() {
+                            _selectedIndex = e.key;
+                          });
+                        },
+                        selectedColor: e.key == _selectedIndex
+                            ? Colors.yellow[900].withOpacity(0.2)
+                            : Colors.grey.withOpacity(0.2),
+                        selectedIconColor: e.key == _selectedIndex
+                            ? Colors.yellow[900]
+                            : Colors.grey,
+                      ),
+                    )
+                    .toList(),
+              ),
             ),
-            AnimatedList(
-              index: 3,
+            BuildAnimatedList(
+              index: 6,
               widget: Container(
                 height: MediaQuery.of(context).size.height * 0.56,
-                margin: EdgeInsets.all(16),
-                child: HotelGridViewList(),
+                margin: EdgeInsets.symmetric(horizontal: 16),
+                child: checkList(),
               ),
             ),
           ],
@@ -33,54 +70,31 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-}
 
-class AnimatedList extends StatefulWidget {
-  final int index;
-  final Widget widget;
+  Widget checkList() {
+    switch (_selectedIndex) {
+      case 0:
+        {
+          return HotelGridViewList();
+        }
+        break;
 
-  const AnimatedList({Key key, this.index, this.widget}) : super(key: key);
+      case 1:
+        {
+          return TransportationView();
+        }
+        break;
+      case 2:
+        {
+          return RestaurantView();
+        }
+        break;
 
-  @override
-  _AnimatedListState createState() => _AnimatedListState();
-}
-
-class _AnimatedListState extends State<AnimatedList> {
-  bool _animate = false;
-
-  static bool _isStart = true;
-
-  @override
-  void initState() {
-    _isStart = true;
-    super.initState();
-    _isStart
-        ? Future.delayed(Duration(milliseconds: widget.index * 150), () {
-            setState(() {
-              _animate = true;
-              _isStart = false;
-            });
-          })
-        : _animate = true;
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedOpacity(
-      duration: Duration(milliseconds: 800),
-      curve: Curves.ease,
-      opacity: _animate ? 1 : 0,
-      child: AnimatedPadding(
-        duration: Duration(milliseconds: 800),
-        padding:
-            _animate ? const EdgeInsets.all(0.0) : const EdgeInsets.all(20),
-        child: widget.widget,
-      ),
-    );
+      default:
+        {
+          return Text('Nothing to do');
+        }
+        break;
+    }
   }
 }

@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:travelGuidebyFlutter/pages/favourite/favourite_page.dart';
 import 'package:travelGuidebyFlutter/pages/home/home_page.dart';
 import 'package:travelGuidebyFlutter/pages/location/location_page.dart';
-import 'package:travelGuidebyFlutter/pages/profile/profile_page.dart';
-import 'package:travelGuidebyFlutter/pages/profile/staggered_trekking.dart';
 import 'package:travelGuidebyFlutter/pages/profile/staggered_trekking_animation.dart';
 
 void main() {
