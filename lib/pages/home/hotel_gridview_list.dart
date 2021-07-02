@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:travelGuidebyFlutter/data/hotel.dart';
+import 'package:travelGuidebyFlutter/widgets/card_gradient.dart';
 
 class HotelGridViewList extends StatelessWidget {
-  final GlobalKey _backgroundImageKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -32,22 +32,6 @@ class HotelGridViewList extends StatelessWidget {
     );
   }
 
-  Widget _buildGradient() {
-    return Positioned.fill(
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          gradient: LinearGradient(
-            colors: [Colors.transparent, Colors.black.withOpacity(0.7)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: [0.6, 0.95],
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _buildHotel(int index, Size size, BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -68,7 +52,7 @@ class HotelGridViewList extends StatelessWidget {
       child: Stack(
         children: [
           _favIcon(index),
-          _buildGradient(),
+          CardGardient(),
           Positioned(
             bottom: 0,
             child: Padding(

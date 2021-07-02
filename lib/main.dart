@@ -4,6 +4,8 @@ import 'package:travelGuidebyFlutter/pages/favourite/favourite_page.dart';
 import 'package:travelGuidebyFlutter/pages/home/home_page.dart';
 import 'package:travelGuidebyFlutter/pages/location/location_page.dart';
 import 'package:travelGuidebyFlutter/pages/profile/profile_page.dart';
+import 'package:travelGuidebyFlutter/pages/profile/staggered_trekking.dart';
+import 'package:travelGuidebyFlutter/pages/profile/staggered_trekking_animation.dart';
 
 void main() {
   runApp(MyApp());
@@ -38,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
     HomePage(),
     FavouritePage(),
     LocationPage(),
-    ProfilePage()
+    StaggeredTrekkingAnimation()
   ];
 
   @override
@@ -86,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavyBarItem(
             icon: _index == 3 ? Icon(Icons.person) : Icon(Icons.person_outline),
-            title: Text('Settings'),
+            title: Text('Profile'),
             activeColor: Colors.deepPurple,
             inactiveColor: Colors.deepPurple[300],
             textAlign: TextAlign.center,

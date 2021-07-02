@@ -1,78 +1,71 @@
 import 'package:flutter/material.dart';
+import 'package:travelGuidebyFlutter/constants/staggered_trekking_enter_animation.dart';
 
-class ProfilePage extends StatelessWidget {
+
+class StaggeredTrekking extends StatelessWidget {
+  StaggeredTrekking({
+    Key key,
+    @required AnimationController controller,
+  })
+      : animation = StaggeredTrekkingEnterAnimation(controller),
+        super(key: key);
+  final StaggeredTrekkingEnterAnimation animation;
+
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Color(0xFFE1F0F4),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 150,
-              child: Stack(
-                overflow: Overflow.visible,
-                children: <Widget>[
-                  topBar(200),
-                  circle(
-                    MediaQuery.of(context).size,
-                    1,
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                children: <Widget>[
-                  SizedBox(height: 50),
-                  Opacity(
-                    opacity: 1,
-                    child: placeholderBox(28, 80, Alignment.centerLeft),
-                  ),
-                  SizedBox(height: 6),
-                  Opacity(
-                    opacity: 1,
-                    child: placeholderBox1(
-                        10, double.infinity, Alignment.centerLeft),
-                  ),
-                  SizedBox(height: 6),
-                  Opacity(
-                    opacity: 1,
-                    child: placeholderBox2(Alignment.center),
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
+      body: AnimatedBuilder(
+        animation: animation.controller,
+        builder: (context, child) => _buildAnimation(context, child, size),
       ),
     );
   }
 
-  Widget placeholderBox2(Alignment alignment) {
-    return Align(
-      alignment: alignment,
-      child: Container(
-          height: 70.0,
-          child: ListView(scrollDirection: Axis.horizontal, children: [
-            _buildImage('assets/images/hotel0.jpeg'),
-            _buildImage('assets/images/hotel2.jpeg'),
-            _buildImage('assets/images/hotel3.jpeg')
-          ])),
+  Widget _buildAnimation(BuildContext context, Widget child, Size size) {
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          SizedBox(
+            height: 150,
+            child: Stack(
+              overflow: Overflow.visible,
+              children: <Widget>[
+                topBar(animation.barHeight.value),
+                circle(
+                  size,
+                  animation.avatarSize.value,
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 50),
+                Opacity(
+                  opacity: animation.titleOpacity.value,
+                  child: placeholderBox(28, 150, Alignment.centerLeft),
+                ),
+                SizedBox(height: 6),
+                Opacity(
+                  opacity: animation.textOpacity.value,
+                  child: placeholderBox1(
+                      250, double.infinity, Alignment.centerLeft),
+                ),
+                SizedBox(height: 6),
+                Opacity(
+                  opacity: animation.imageOpacity.value,
+                  child: placeholderBox2(Alignment.center),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
-  }
-
-  _buildImage(String imgPath) {
-    return Padding(
-        padding: EdgeInsets.only(right: 15.0),
-        child: Container(
-            height: 50.0,
-            width: 115.0,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15.0),
-                image: DecorationImage(
-                    image: AssetImage(imgPath), fit: BoxFit.cover))));
   }
 
   Container topBar(double height) {
@@ -81,7 +74,7 @@ class ProfilePage extends StatelessWidget {
       width: double.infinity,
       //color: Colors.blue,
       child: Image.asset(
-        "assets/images/hotel0.jpeg",
+        "assets/images/hotel5.jpeg",
         fit: BoxFit.cover,
       ),
     );
@@ -104,8 +97,7 @@ class ProfilePage extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100),
             color: Colors.grey.shade300,
-            image:
-                DecorationImage(image: AssetImage("assets/images/avtar.jpeg")),
+            image: DecorationImage(image: AssetImage("assets/images/avtar.jpeg")),
           ),
         ),
       ),
@@ -175,10 +167,10 @@ class ProfilePage extends StatelessWidget {
                 height: 10,
               ),
               Container(
-                  height: 100,
+                  height: 80,
                   width: width,
                   child: Image.asset(
-                    "assets/poles.jpg",
+                    "assets/images/hotel3.jpeg",
                     fit: BoxFit.cover,
                   )),
               SizedBox(
@@ -200,7 +192,7 @@ class ProfilePage extends StatelessWidget {
                   height: 100,
                   width: width,
                   child: Image.asset(
-                    "assets/camp.jpg",
+                    "assets/images/hotel3.jpeg",
                     fit: BoxFit.cover,
                   )),
               SizedBox(
@@ -210,6 +202,31 @@ class ProfilePage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  _buildImage(String imgPath) {
+    return Padding(
+        padding: EdgeInsets.only(right: 15.0),
+        child: Container(
+            height: 50.0,
+            width: 115.0,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+                image: DecorationImage(
+                    image: AssetImage(imgPath), fit: BoxFit.cover))));
+  }
+
+  Widget placeholderBox2(Alignment alignment) {
+    return Align(
+      alignment: alignment,
+      child: Container(
+          height: 70.0,
+          child: ListView(scrollDirection: Axis.horizontal, children: [
+            _buildImage('assets/images/hotel1.jpeg'),
+            _buildImage('assets/images/hotel3.jpeg'),
+            _buildImage('assets/images/hotel2.jpeg')
+          ])),
     );
   }
 }
